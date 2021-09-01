@@ -25,12 +25,14 @@
                         <li class="list-group-item">
                             <div class="card-text text-center">End Date : <span th:text="*{endDate}"></span></div>
                         </li>
-                        <a th:href="@{/vacations/details(id = *{id})}">Details </a>
                     </ul>
-
                 <div class="button-holder d-flex justify-content-center">
-                    <a th:href="@{/vacations/edit-vacation}" class="btn btn-dark">Edit Vacation</a>
+                    <a th:href="@{/vacations/details(id = *{id})}" class="btn btn-success">Details </a>
                 </div>
+
+<!--                <div class="button-holder d-flex justify-content-center">-->
+<!--                    <a th:href="@{/vacations/edit-vacation}" class="btn btn-dark">Edit Vacation</a>-->
+<!--                </div>-->
 
 
 <!--                <a class="btn btn-success" th:href="@{/products/buy/{id}(id = *{id})}">Buy</a>-->

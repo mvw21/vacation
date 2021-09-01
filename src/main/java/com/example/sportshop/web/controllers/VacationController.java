@@ -1,11 +1,9 @@
 package com.example.sportshop.web.controllers;
 
-import com.example.sportshop.domain.model.binding.UserEditBindingModel;
 import com.example.sportshop.domain.model.binding.VacationAddBindingModel;
 import com.example.sportshop.domain.model.binding.VacationEditBindingModel;
 import com.example.sportshop.domain.model.service.UserServiceModel;
 import com.example.sportshop.domain.model.service.VacationServiceModel;
-import com.example.sportshop.domain.model.view.UserEditViewModel;
 import com.example.sportshop.domain.model.view.UserProfileViewModel;
 import com.example.sportshop.domain.model.view.VacationViewModel;
 import com.example.sportshop.service.UserService;
@@ -32,63 +30,14 @@ public class VacationController extends BaseController{
     private final VacationService vacationService;
     private final UserService userService;
 
-
     public VacationController(ModelMapper modelMapper, VacationService vacationService, UserService userService) {
         this.modelMapper = modelMapper;
         this.vacationService = vacationService;
         this.userService = userService;
     }
 
-//    @GetMapping("/vacation")
-//    public ModelAndView profile(ModelAndView modelAndView, HttpSession session){
-//        UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
-//        List<Object> vacations = new ArrayList<>();
-////        vacations.add(user.getVacation().getStartDate());
-////        vacations.add(user.getVacation().getEndDate());
-////        vacations.add(user.getVacation().getUsername());
-//
-//        modelAndView.addObject("i",vacations);
-//        return super.view("/vacation", modelAndView);
-//    }
-
-    @GetMapping("/vacation1")
-    public ModelAndView profile1(ModelAndView modelAndView, HttpSession session){
-
-        return super.view("/vacation1", modelAndView);
-    }
-
-    @PostMapping("/vacation")
-    public String vacation1(Model model, HttpSession session,
-                            @ModelAttribute("userProfileViewModel") UserProfileViewModel userProfileViewModel){
-        UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
-
-        UserServiceModel user1 = this.modelMapper.map(userProfileViewModel,UserServiceModel.class);
-        String userrrr = user1.getUsername();
-
-
-        List<VacationViewModel> vacations = this.vacationService.getAllVacations()
-                .stream()
-                .map(vacation -> {
-                    VacationViewModel vacationViewModel = this.modelMapper.map(vacation, VacationViewModel.class);
-
-                    return vacationViewModel;
-                }).collect(Collectors.toList());
-
-        vacations = vacations.stream()
-                .filter(v-> v.getUsername().equals(user1.getUsername()))
-                .collect(Collectors.toList());
-
-        model.addAttribute("vacations", vacations);
-        session.setAttribute("name", user.getUsername());
-        return "vacation";
-
-    }
-
-
-
-
     @GetMapping("/vacation")
-    public String vacation(Model model, HttpSession session){
+    public String vacationGet(Model model, HttpSession session){
         UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
 
         List<VacationViewModel> vacations = this.vacationService.getAllVacations()
@@ -109,8 +58,32 @@ public class VacationController extends BaseController{
 
     }
 
+    @PostMapping("/vacation")
+    public String vacationPost(Model model, HttpSession session,
+                               @ModelAttribute("userProfileViewModel") UserProfileViewModel userProfileViewModel){
+        UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
+
+        UserServiceModel user1 = this.modelMapper.map(userProfileViewModel,UserServiceModel.class);
+
+        List<VacationViewModel> vacations = this.vacationService.getAllVacations()
+                .stream()
+                .map(vacation -> {
+                    VacationViewModel vacationViewModel = this.modelMapper.map(vacation, VacationViewModel.class);
+                    return vacationViewModel;
+                }).collect(Collectors.toList());
+
+        vacations = vacations.stream()
+                .filter(v-> v.getUsername().equals(user1.getUsername()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("vacations", vacations);
+        session.setAttribute("name", user.getUsername());
+        return "vacation";
+
+    }
+
     @GetMapping("/vacations")
-    public String men(Model model, HttpSession session){
+    public String vacationsGet(Model model, HttpSession session){
         UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
 
         List<VacationViewModel> vacations = this.vacationService.getAllVacations()
@@ -127,9 +100,8 @@ public class VacationController extends BaseController{
 
     }
 
-
     @GetMapping("/add")
-    public String add(Model model, HttpSession session){
+    public String addVacationGet(Model model, HttpSession session){
         if(!model.containsAttribute("vacationAddBindingModel")){
             model.addAttribute("vacationAddBindingModel",new VacationAddBindingModel());
         }
@@ -141,9 +113,8 @@ public class VacationController extends BaseController{
 
     }
 
-
     @PostMapping("/add")
-    public String addConfirm(@Valid @ModelAttribute("vacationAddBindingModel") VacationAddBindingModel vacationAddBindingModel,
+    public String addVacationPost(@Valid @ModelAttribute("vacationAddBindingModel") VacationAddBindingModel vacationAddBindingModel,
                              @NotNull BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              HttpSession httpSession){
@@ -164,37 +135,36 @@ public class VacationController extends BaseController{
              return "redirect:/vacations/add";
          }
 
-
         this.vacationService.addVacation(vacation);
         return "redirect:/";
     }
 
     @GetMapping("/edit-vacation")
-    public ModelAndView editProfile(HttpSession session,ModelAndView modelAndView, @ModelAttribute(name = "model") VacationEditBindingModel model) {
+    public ModelAndView editVacationGet(HttpSession session,ModelAndView modelAndView, @ModelAttribute("vacationViewModel") VacationViewModel vacationViewModel) {
         UserServiceModel userServiceModel = (UserServiceModel)(session.getAttribute("user"));
-        model = this.modelMapper.map(userServiceModel, VacationEditBindingModel.class);
 
-        modelAndView.addObject("model", model);
+       VacationServiceModel vacationServiceModel = this.vacationService.getByUsername(userServiceModel.getUsername());
+       vacationServiceModel.setStartDate(userServiceModel.getStartDate());
+       vacationServiceModel.setEndDate(userServiceModel.getEndDate());
 
-        return super.view("/edit-vacation", modelAndView);
+       vacationViewModel = this.modelMapper.map(vacationServiceModel,VacationViewModel.class);
+
+       modelAndView.addObject("vacationViewModel", vacationViewModel);
+
+       return super.view("/edit-vacation", modelAndView);
     }
 
     @PostMapping("/edit-vacation")
-    public ModelAndView editProfileConfirm(HttpSession session, ModelAndView modelAndView, @ModelAttribute VacationEditBindingModel model) {
-        System.out.println();
-        System.out.println();
-
-
+    public ModelAndView editVacationPost(HttpSession session, ModelAndView modelAndView, @ModelAttribute VacationEditBindingModel model) {
        VacationServiceModel newVacation = this.modelMapper.map(model, VacationServiceModel.class);
         this.vacationService.editVacation(newVacation);
-//        session.setAttribute("user",newUser);
         return super.redirect("/");
     }
 
     @GetMapping("/details")
     public ModelAndView details(@RequestParam("id")String id, ModelAndView modelAndView){
         modelAndView.addObject("vacation",this.vacationService.findById(id));
-        modelAndView.setViewName("product-details");
+        modelAndView.setViewName("vacation-details");
         return modelAndView;
     }
 

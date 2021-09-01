@@ -14,41 +14,18 @@
         <h1 class="text-center font-weight-bold text-white">Edit Profile</h1>
         <hr class="hr-2 bg-dark w-25">
         <form class="form w-25 mx-auto" th:action="@{/users/edit-profile}" th:method="post"><input type="hidden"
-                                                                                                   name="_csrf"
-                                                                                                   value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                                                                                   name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
             <div class="form-group text-center text-white">
                 <label for="username" class="mb-1">Username</label>
                 <input type="text" th:value="${session.user.username}" class="form-control" name="username" id="username"
                        readonly>
             </div>
-            <div class="form-group text-center text-white">
-                <label for="oldPassword" class="mb-1">Old Password</label>
-                <input type="password" class="form-control" id="oldPassword" placeholder="Password..."
-                       name="oldPassword"
-                       required>
-            </div>
-            <div class="form-group text-center text-white">
-                <label for="password" class="mb-1">New Password</label>
-                <input type="password" class="form-control" id="password" placeholder="New Password..."
-                       name="password">
-            </div>
-            <div class="form-group text-center text-white">
-                <label for="confirmPassword" class="mb-1">Confirm New Password</label>
-                <input type="password" class="form-control" id="confirmPassword"
-                       placeholder="Confirm New Password..."
-                       name="confirmPassword">
-            </div>
-            <div class="form-group text-center text-white">
-                <label for="email" class="mb-1">Email</label>
-                <input type="email" th:value="${session.user.email}" class="form-control" id="email" placeholder="Email..."
-                       name="email">
-            </div>
-
-            <div class="form-group">
+            <div >
                 <label for="start">Vacation</label>
                 <br>
+
                 <label for="start">Start date:</label>
-                <input type="date"  id="start" name="startDate" value="2021-07-22" min="2021-01-01" max="2021-12-31">
+                <input type="date"  id="start" name="startDate" min="2021-01-01" max="2021-12-31">
                 <br>
                 <label for="end">End date:</label>
                 <input type="date" id="end" name="endDate" value="2021-07-22" min="2021-01-01" max="2021-12-31">

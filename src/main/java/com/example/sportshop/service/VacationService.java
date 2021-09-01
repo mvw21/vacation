@@ -10,6 +10,8 @@ public interface VacationService {
 
     VacationViewModel findById(String id);
 
+    VacationServiceModel getByUsername(String username);
+
     void addVacation(VacationServiceModel vacationServiceModel);
 
     void delete(String id);

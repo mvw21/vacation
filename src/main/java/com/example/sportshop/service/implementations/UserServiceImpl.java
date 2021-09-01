@@ -22,18 +22,13 @@ public class UserServiceImpl implements UserService {
     private final UsersRepository usersRepository;
     private final VacationRepository vacationRepository;
     private final ModelMapper modelMapper;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-
 
     public UserServiceImpl(UsersRepository usersRepository, VacationRepository vacationRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersRepository = usersRepository;
         this.vacationRepository = vacationRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-
     }
 
     @Override
@@ -51,7 +46,6 @@ public class UserServiceImpl implements UserService {
 
         user.setRole(userServiceModel.getRole());
 
-
         this.usersRepository.saveAndFlush(user);
         return this.modelMapper.map(user, UserServiceModel.class);
 
@@ -68,12 +62,7 @@ public class UserServiceImpl implements UserService {
         User user = this.usersRepository.findByUsername(username).orElse(null);
         assert user != null;
         return bCryptPasswordEncoder.matches(password, user.getPassword());
-
     }
-
-
-
-
 
     @Override
     public List<String> getAllUserNames(String name) {
@@ -98,7 +87,6 @@ public class UserServiceImpl implements UserService {
                 this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
         user.setEmail(userServiceModel.getEmail());
-
 
         user.setStartDate(userServiceModel.getStartDate());
         user.setEndDate(userServiceModel.getEndDate());
