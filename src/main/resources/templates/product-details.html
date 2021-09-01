@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}" ></th:block>
+</head>
+<body>
+<header >
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <th:block th:include="~{/fragments/nav}" ></th:block>
+    </nav>
+</header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Details</span></h1>
+    <hr class="my-3"/>
+    <div class="container-fluid bg-dark w-25 m-auto ">
+        <div class="row justify-content-center ">
+            <div th:object="${vacation}" class="card" style="width: 18rem;">
+                <div class="card-body bg-gray align-content-center text-center">
+                    <h6 th:text="|Userame - *{username}|">Username</h6>
+                    <h6 th:text="|Start Date - *{startDate}|">Start Date</h6>
+                    <h6 th:text="|End Date - *{endDate}|">End Date</h6>
+
+                    <form class="form w-25 mx-auto" th:action="@{/vacations/edit-vacation}" th:method="post"><input type="hidden"
+                                                                                                               name="_csrf"
+                                                                                                               value="80417983-fe8b-45c7-963e-31f6915a1560">
+
+                        <div class="form-group">
+                            <label for="start">Vacation</label>
+                            <br>
+
+                            <label for="username">Username:</label>
+                            <input type="text"  id="username" name="username">
+
+
+                            <br>
+                            <label for="start">Start date:</label>
+                            <input type="date"  id="start" name="startDate" value="2021-07-22" min="2021-01-01" max="2021-12-31">
+                            <br>
+                            <label for="end">End date:</label>
+                            <input type="date" id="end" name="endDate" value="2021-07-22" min="2021-01-01" max="2021-12-31">
+
+                        </div>
+
+                        <hr class="hr-2 bg-dark">
+                        <div class="button-holder d-flex justify-content-center">
+                            <button type="submit" class="btn btn-dark">Edit</button>
+                        </div>
+                    </form>
+
+                    <a th:href="@{/vacations/delete/{id}(id = *{id})}" class="btn btn-danger" >Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer bg-dark  py-2">
+    <th:block th:include="~{/fragments/footer}" ></th:block>
+</footer>
+</body>
+</html>

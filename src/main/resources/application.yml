@@ -1,0 +1,16 @@
+#Data Source Properties
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/vacation_db?createDatabaseIfNotExist=true&amp
+        username: root
+        password: roo7
+#JPA Properties
+    jpa:
+        properties.hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+        properties.hibernate.format_sql: TRUE
+        properties.hibernate.show_sql: TRUE
+        hibernate.ddl-auto: update
+###Logging Levels
+# Disable the default loggers
+logging.level.org.springframework.security: DEBUG

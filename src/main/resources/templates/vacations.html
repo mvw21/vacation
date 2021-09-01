@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}" ></th:block>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <th:block th:include="~{/fragments/nav}" ></th:block>
+    </nav>
+</header>
+<main>
+   <hr class="hr-3"/>
+    <div class="container-fluid">
+        <div class="offers row mx-auto d-flex flex-row justify-content-center">
+            <div th:each="i : ${vacations}" th:object="${i}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+
+                    <div class="card-body pb-1">
+                        <h5 class="card-title text-center" th:text="|Username - *{username}|"></h5>
+                    </div>
+                    <ul class="offer-details list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="card-text text-center">Start Date : <span th:text="*{startDate}"></span></div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="card-text text-center">End Date : <span th:text="*{endDate}"></span></div>
+                        </li>
+                        <a th:href="@{/vacations/details(id = *{id})}">Details </a>
+                    </ul>
+
+                <div class="button-holder d-flex justify-content-center">
+                    <a th:href="@{/vacations/edit-vacation}" class="btn btn-dark">Edit Vacation</a>
+                </div>
+
+
+<!--                <a class="btn btn-success" th:href="@{/products/buy/{id}(id = *{id})}">Buy</a>-->
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

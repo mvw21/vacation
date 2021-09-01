@@ -1,0 +1,54 @@
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <th:block th:if="${session.isEmpty()}">
+
+
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav row">
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" href="/users/login">Login</a>
+                </li>
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" href="/users/register">Register</a>
+                </li>
+            </ul>
+        </div>
+    </th:block>
+
+    <th:block th:unless="${session.isEmpty()}">
+      <div th:object="${session.user}" class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+          <ul class="navbar-nav row">
+              <li>
+                  <a class="nav-link text-white active h5" href="/users/profile">Profiles</a>
+              </li>
+              <li>
+                  <a class="nav-link text-white active h5" href="/vacations/vacations">Vacations</a>
+              </li>
+              <li>
+                  <a class="nav-link text-white active h5" href="/users/edit-profile">Edit Profile</a>
+              </li>
+              <li>
+                  <a class="nav-link text-white active h5" href="/vacations/add">Add Vacation</a>
+              </li>
+          <li>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+          </li>
+
+</ul>
+      </div>
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav row">
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" href="/users/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+</th:block>
+</th:block>
