@@ -17,4 +17,6 @@ public interface UserService {
 
     List<UserServiceModel> getAllUsers();
 
+    List<String> getAllUsernamesStrings(List<UserServiceModel> users);
+
 }

@@ -12,23 +12,23 @@
 <main>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Details</span></h1>
     <hr class="my-3"/>
-    <div class="container-fluid bg-dark w-25 m-auto ">
-        <div class="row justify-content-center ">
-            <div th:object="${vacation}" class="card" style="width: 18rem;">
-                <div class="card-body bg-black text-danger align-content-center text-center">
+    <div class="container-fluid offers row mx-auto d-flex flex-row justify-content-center">
+        <div class="offers row mx-auto d-flex flex-row justify-content-center ">
+            <div th:object="${vacation}" class="card" style="width: 24rem;">
+                <div class="card-body bg-black text-dark align-content-center text-center">
                     <h6 th:text="|Userame - *{username}|">Username</h6>
-                    <h6 th:text="|Start Date - *{startDate}|">Start Date</h6>
-                    <h6 th:text="|End Date - *{endDate}|">End Date</h6>
+                    <h6 th:text="|Vacation Start Date - *{startDate}|">Start Date</h6>
+                    <h6 th:text="|Vacation End Date - *{endDate}|">End Date</h6>
 
-                    <form class="form w-25 mx-auto" th:action="@{/vacations/edit-vacation}" th:method="post"><input type="hidden"
+                    <form class="form w-25 mx-auto" th:action="@{/vacations/edit-vacation}" th:method="POST"><input type="hidden"
                                                                                                                name="_csrf"
                                                                                                                value="80417983-fe8b-45c7-963e-31f6915a1560">
 
                         <div class="form w-25 mx-auto">
 <!--                            <label for="start">Vacation</label>-->
 <!--                            <br>-->
-                            <div class="form-group text-left text-danger">
-                                <label for="username" class="mb-1">Username</label>
+                            <div class="form-group text-left text-dark">
+                                <label for="username" class="mb-1">Logged Username</label>
                                 <input type="text" th:value="${session.user.username}"  name="username" id="username"
                                        readonly>
                             </div>

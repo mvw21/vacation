@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,6 +105,9 @@ public class VacationController extends BaseController{
     public String addVacationGet(Model model, HttpSession session){
         if(!model.containsAttribute("vacationAddBindingModel")){
             model.addAttribute("vacationAddBindingModel",new VacationAddBindingModel());
+            List<UserServiceModel> users = this.userService.getAllUsers();
+            List<String> usernames = this.userService.getAllUsernamesStrings(users);
+            model.addAttribute("usernames",usernames);
         }
 
         if(session.getAttribute("user") == null){
@@ -140,16 +144,18 @@ public class VacationController extends BaseController{
     }
 
     @GetMapping("/edit-vacation")
-    public ModelAndView editVacationGet(HttpSession session,ModelAndView modelAndView, @ModelAttribute("vacationViewModel") VacationViewModel vacationViewModel) {
+    public ModelAndView editVacationGet(HttpSession session,ModelAndView modelAndView,@Valid @ModelAttribute("vacationEditBindingModel") VacationEditBindingModel vacationEditBindingModel) {
         UserServiceModel userServiceModel = (UserServiceModel)(session.getAttribute("user"));
 
        VacationServiceModel vacationServiceModel = this.vacationService.getByUsername(userServiceModel.getUsername());
        vacationServiceModel.setStartDate(userServiceModel.getStartDate());
        vacationServiceModel.setEndDate(userServiceModel.getEndDate());
 
-       vacationViewModel = this.modelMapper.map(vacationServiceModel,VacationViewModel.class);
+        vacationEditBindingModel = this.modelMapper.map(vacationServiceModel,VacationEditBindingModel.class);
 
-       modelAndView.addObject("vacationViewModel", vacationViewModel);
+
+//       modelAndView.addObject("vacationViewModel", vacationViewModel);
+       modelAndView.addObject("vacationEditBindingModel", vacationEditBindingModel);
 
        return super.view("/edit-vacation", modelAndView);
     }
@@ -158,7 +164,7 @@ public class VacationController extends BaseController{
     public ModelAndView editVacationPost(HttpSession session, ModelAndView modelAndView, @ModelAttribute VacationEditBindingModel model) {
        VacationServiceModel newVacation = this.modelMapper.map(model, VacationServiceModel.class);
         this.vacationService.editVacation(newVacation);
-        return super.redirect("/");
+        return super.redirect("/vacations/vacations");
     }
 
     @GetMapping("/details")
@@ -166,6 +172,13 @@ public class VacationController extends BaseController{
         modelAndView.addObject("vacation",this.vacationService.findById(id));
         modelAndView.setViewName("vacation-details");
         return modelAndView;
+    }
+
+    @PostMapping("/details")
+    public ModelAndView detailsPost(@ModelAttribute VacationEditBindingModel model){
+        VacationServiceModel newVacation = this.modelMapper.map(model, VacationServiceModel.class);
+        this.vacationService.editVacation(newVacation);
+        return super.redirect("/vacations/vacations");
     }
 
     @GetMapping("/delete/{id}")

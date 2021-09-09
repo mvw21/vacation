@@ -49,8 +49,17 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="email" class="h4 mb-2">Role</label>
             </div>
-            <input th:field="*{role}" th:errorclass="bg-danger" type="role" class="form-control" id="role" name="role" />
 
+            <select th:field="*{role}" th:errorclass="bg-danger" type="role" class="form-control" id="role" name="role">
+                <option value="">Select type</option>
+                <option th:each="o : ${T(com.example.sportshop.domain.entity.Roles).values()}"
+                        th:text="${o}" th:value="${o}">Type</option>
+            </select>
+        </div>
+
+
+
+        </div>
             <small th:each="e : ${#fields.errors('email')}" th:text="${e}" class="text-danger">Role error message</small>
         </div>
 

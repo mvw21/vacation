@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,6 +103,15 @@ public class UserServiceImpl implements UserService {
                 .map(e-> this.modelMapper.map(e,UserServiceModel.class))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<String> getAllUsernamesStrings(List<UserServiceModel> users) {
+        List<String> usernames = new ArrayList<>();
+        for(UserServiceModel u : users){
+            usernames.add(u.getUsername());
+        }
+        return usernames;
     }
 
 
