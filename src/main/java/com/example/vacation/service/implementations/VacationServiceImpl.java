@@ -8,6 +8,7 @@ import com.example.vacation.service.VacationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,9 +60,10 @@ public class VacationServiceImpl implements VacationService {
 
     @Override
     public VacationServiceModel editVacation(VacationServiceModel vacationServiceModel) {
-
-    Vacation vacation = this.vacationRepository.findByUsername(vacationServiceModel.getUsername());
+    Vacation vacation = this.vacationRepository.findById(vacationServiceModel.getId()).orElse(null);
+//    Vacation vacation = this.vacationRepository.findByUsername(vacationServiceModel.getUsername());
         assert vacation != null;
+
         vacation.setStartDate(vacationServiceModel.getStartDate());
         vacation.setEndDate(vacationServiceModel.getEndDate());
 

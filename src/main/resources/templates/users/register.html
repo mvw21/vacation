@@ -52,7 +52,7 @@
 
             <select th:field="*{role}" th:errorclass="bg-danger" type="role" class="form-control" id="role" name="role">
                 <option value="">Select type</option>
-                <option th:each="o : ${T(com.example.sportshop.domain.entity.Roles).values()}"
+                <option th:each="o : ${T(com.example.vacation.domain.entity.Roles).values()}"
                         th:text="${o}" th:value="${o}">Type</option>
             </select>
         </div>

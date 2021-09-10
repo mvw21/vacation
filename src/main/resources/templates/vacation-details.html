@@ -19,27 +19,34 @@
                     <h6 th:text="|Userame - *{username}|">Username</h6>
                     <h6 th:text="|Vacation Start Date - *{startDate}|">Start Date</h6>
                     <h6 th:text="|Vacation End Date - *{endDate}|">End Date</h6>
+<!--                    <h6 th:text="|Vacation id - *{id}|">Id</h6>-->
 
-                    <form class="form w-25 mx-auto" th:action="@{/vacations/edit-vacation}" th:method="POST"><input type="hidden"
+
+                    <form class="form w-25 mx-auto" th:action="@{/vacations/details}" th:method="POST"><input type="hidden"
                                                                                                                name="_csrf"
                                                                                                                value="80417983-fe8b-45c7-963e-31f6915a1560">
 
-                        <div class="form w-25 mx-auto">
+                        <div class="form text-dark">
 <!--                            <label for="start">Vacation</label>-->
 <!--                            <br>-->
+                            <label for="id"></label>
+                            <input type="text" th:value="*{id}" id="id" name="id" readonly hidden>
                             <div class="form-group text-left text-dark">
-                                <label for="username" class="mb-1">Logged Username</label>
-                                <input type="text" th:value="${session.user.username}"  name="username" id="username"
-                                       readonly>
+                                <label for="username" class="mb-1"></label>
+                                <input type="text" th:value="*{username}"  name="username" id="username"
+                                       readonly hidden>
                             </div>
 
 
                             <br>
-                            <label for="start">New start date:</label>
-                            <input type="date"  id="start" name="startDate" min="2021-01-01" max="2022-12-31">
+<!--                            <label for="id">Id</label>-->
+<!--                            <input type="text" th:object="${vacation.getId()}" id="id" name="id" readonly>-->
+
+                            <label for="start">Enter start date:</label>
+                            <input type="date" th:value="*{startDate}" id="start" name="startDate" min="2021-01-01" max="2022-12-31">
                             <br>
-                            <label for="end">New end date:</label>
-                            <input type="date" id="end" name="endDate" min="2021-01-01" max="2022-12-31">
+                            <label for="end">Enter end date:</label>
+                            <input type="date" th:value="*{endDate}" id="end" name="endDate" min="2021-01-01" max="2022-12-31">
 
                         </div>
 
