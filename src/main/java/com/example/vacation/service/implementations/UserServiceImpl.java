@@ -89,9 +89,11 @@ public class UserServiceImpl implements UserService {
                 user.getPassword());
         user.setEmail(userServiceModel.getEmail());
 
-        user.setStartDate(userServiceModel.getStartDate());
-        user.setEndDate(userServiceModel.getEndDate());
+//        Vacation vacation = new Vacation(userServiceModel.getStartDate(),userServiceModel.getEndDate(),userServiceModel.getUsername());
         Vacation vacation = new Vacation(userServiceModel.getStartDate(),userServiceModel.getEndDate(),userServiceModel.getUsername());
+        user.setVacations(userServiceModel.getVacations());
+//        user.setStartDate(userServiceModel.getStartDate());
+//        user.setEndDate(userServiceModel.getEndDate());
         this.vacationRepository.saveAndFlush(vacation);
         return this.modelMapper.map(this.usersRepository.saveAndFlush(user), UserServiceModel.class);
     }
@@ -112,6 +114,16 @@ public class UserServiceImpl implements UserService {
             usernames.add(u.getUsername());
         }
         return usernames;
+    }
+
+    @Override
+    public UserServiceModel getById(String id) {
+        User user = this.usersRepository.findById(id).orElse(null);
+        assert user != null;
+        List<Vacation> vacationsOfUser = this.vacationRepository.findAllByUsername(user.getUsername());
+        UserServiceModel userServiceModel = this.modelMapper.map(user,UserServiceModel.class);
+        userServiceModel.setVacations(vacationsOfUser);
+        return userServiceModel;
     }
 
 

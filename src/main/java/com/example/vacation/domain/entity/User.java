@@ -2,6 +2,7 @@ package com.example.vacation.domain.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -13,12 +14,8 @@ public class User extends BaseEntity  {
     private String role;
     private String startDate;
     private String endDate;
-    private Vacation vacation;
+    private List<Vacation> vacations;
 
-
-    public User(Vacation vacation) {
-        this.vacation = vacation;
-    }
 
     public User() {
 
@@ -76,16 +73,12 @@ public class User extends BaseEntity  {
         this.endDate = endDate;
     }
 
-    @OneToOne
-    public Vacation getVacation() {
-        return vacation;
+    @OneToMany()
+    public List<Vacation> getVacations() {
+        return vacations;
     }
 
-    public void setVacation(Vacation vacation) {
-        this.vacation = vacation;
+    public void setVacations(List<Vacation> vacations) {
+        this.vacations = vacations;
     }
-
-
-
-
 }

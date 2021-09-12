@@ -1,12 +1,16 @@
 package com.example.vacation.domain.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "vacations")
 public class Vacation extends BaseEntity{
     private String startDate;
     private String endDate;
     private String username;
+
 
     public Vacation() {
     }
@@ -40,4 +44,5 @@ public class Vacation extends BaseEntity{
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

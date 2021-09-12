@@ -2,6 +2,8 @@ package com.example.vacation.domain.model.service;
 
 import com.example.vacation.domain.entity.Vacation;
 
+import java.util.List;
+
 public class UserServiceModel extends BaseServiceModel{
 
     private String username;
@@ -10,7 +12,7 @@ public class UserServiceModel extends BaseServiceModel{
     private String role;
     private String startDate;
     private String endDate;
-    private Vacation vacation;
+    private List<Vacation> vacations;
 
     public UserServiceModel() {
     }
@@ -63,11 +65,11 @@ public class UserServiceModel extends BaseServiceModel{
         this.endDate = endDate;
     }
 
-    public Vacation getVacation() {
-        return vacation;
+    public List<Vacation> getVacations() {
+        return vacations;
     }
 
-    public void setVacation(Vacation vacation) {
-        this.vacation = vacation;
+    public void setVacations(List<Vacation> vacations) {
+        this.vacations = vacations;
     }
 }

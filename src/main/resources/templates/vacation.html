@@ -13,11 +13,15 @@
     <hr class="hr-3"/>
     <div class="container-fluid">
         <div class="offers row mx-auto d-flex flex-row justify-content-center">
+<!--            <div th:each="i : ${user}" th:object="${i}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">-->
             <div th:each="i : ${vacations}" th:object="${i}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
                 <!--                <a th:href="@{/products/details(id = *{id})}">-->
+<!--                <div th:each="j : *{vacations}" th:object="${j}">-->
+<!--                    <h5 class="card-title text-center" th:text="|START - *{startDate}|"></h5>-->
 
+<!--                </div>-->
                 <div class="card-body pb-1">
-                    <h5 class="card-title text-center" th:text="|Username - *{username}|"></h5>
+                    <h5 class="card-title text-center" th:text="|Username: *{username}|"></h5>
                 </div>
                 <ul class="offer-details list-group list-group-flush">
                     <li class="list-group-item">
@@ -27,7 +31,9 @@
                         <div class="card-text text-center">End Date : <span th:text="*{endDate}"></span></div>
                     </li>
                 </ul>
-                </a>
+                <div class="button-holder d-flex justify-content-center">
+                    <a th:href="@{/vacations/details(id = *{id})}" class="btn btn-success">Details </a>
+                </div>
 
                 <!--                <a class="btn btn-success" th:href="@{/products/buy/{id}(id = *{id})}">Buy</a>-->
 
@@ -36,8 +42,5 @@
     </div>
 
 </main>
-<footer class="footer bg-dark  py-2">
-    <th:block th:include="~{/fragments/footer}" ></th:block>
-</footer>
 </body>
 </html>

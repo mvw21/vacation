@@ -16,7 +16,7 @@
             <div th:each="i : ${vacations}" th:object="${i}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
 
                     <div class="card-body pb-1">
-                        <h5 class="card-title text-center" th:text="|Username - *{username}|"></h5>
+                        <h5 class="card-title text-center" th:text="|Username: *{username}|"></h5>
                     </div>
                     <ul class="offer-details list-group list-group-flush">
                         <li class="list-group-item">

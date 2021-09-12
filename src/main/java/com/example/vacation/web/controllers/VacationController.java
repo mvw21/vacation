@@ -37,27 +37,27 @@ public class VacationController extends BaseController{
         this.userService = userService;
     }
 
-    @GetMapping("/vacation")
-    public String vacationGet(Model model, HttpSession session){
-        UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
-
-        List<VacationViewModel> vacations = this.vacationService.getAllVacations()
-                .stream()
-                .map(vacation -> {
-                    VacationViewModel vacationViewModel = this.modelMapper.map(vacation, VacationViewModel.class);
-
-                    return vacationViewModel;
-                }).collect(Collectors.toList());
-
-        vacations = vacations.stream()
-                .filter(v-> v.getUsername().equals(user.getUsername()))
-                .collect(Collectors.toList());
-
-        model.addAttribute("vacations", vacations);
-        session.setAttribute("name", user.getUsername());
-        return "vacation";
-
-    }
+//    @GetMapping("/vacation")
+//    public String vacationGet(Model model, HttpSession session){
+//        UserServiceModel user =this.modelMapper.map(session.getAttribute("user"),UserServiceModel.class);
+//
+//        List<VacationViewModel> vacations = this.vacationService.getAllVacations()
+//                .stream()
+//                .map(vacation -> {
+//                    VacationViewModel vacationViewModel = this.modelMapper.map(vacation, VacationViewModel.class);
+//
+//                    return vacationViewModel;
+//                }).collect(Collectors.toList());
+//
+//        vacations = vacations.stream()
+//                .filter(v-> v.getUsername().equals(user.getUsername()))
+//                .collect(Collectors.toList());
+//
+//        model.addAttribute("vacations", vacations);
+//        session.setAttribute("name", user.getUsername());
+//        return "vacation";
+//
+//    }
 
     @PostMapping("/vacation")
     public String vacationPost(Model model, HttpSession session,
@@ -185,6 +185,28 @@ public class VacationController extends BaseController{
     public String delete(@PathVariable("id")String id){
         this.vacationService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/vacation")
+    public String userVacations(@RequestParam("id")String id, Model model){
+        model.addAttribute("user",this.userService.getById(id));
+//        modelAndView.setViewName("vacation");
+//        return modelAndView;
+
+        UserServiceModel user =this.modelMapper.map(this.userService.getById(id),UserServiceModel.class);
+
+        List<VacationViewModel> vacations = this.vacationService.getAllVacations()
+                .stream()
+                .filter(v -> v.getUsername().equals(user.getUsername()))
+                .map(vacation -> {
+                    VacationViewModel vacationViewModel = this.modelMapper.map(vacation, VacationViewModel.class);
+
+                    return vacationViewModel;
+                }).collect(Collectors.toList());
+
+        model.addAttribute("vacations", vacations);
+        return "vacation";
+
     }
 
 }

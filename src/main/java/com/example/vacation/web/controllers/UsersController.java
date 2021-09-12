@@ -136,4 +136,6 @@ public class UsersController extends BaseController {
         httpSession.invalidate();
         return "redirect:/";
     }
+
+
 }

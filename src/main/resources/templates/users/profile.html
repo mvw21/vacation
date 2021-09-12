@@ -22,20 +22,24 @@
 <!--                        <img class="card-img-top" th:src="*{imgUrl}" alt="image">-->
                     </div>
                     <div class="card-body pb-1">
-                        <h5 class="card-title text-center" th:text="|Username - *{username}|"></h5>
+                        <h5 class="card-title text-center" th:text="|Username: *{username}|"></h5>
                     </div>
+<!--                <div class="card-body pb-1">-->
+<!--                    <h5 class="card-title text-center" th:text="|Id - *{id}|"></h5>-->
+<!--                </div>-->
                     <ul class="offer-details list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="card-text text-center"><span th:text="*{email}"></span></div>
                         </li>
                         <li class="list-group-item">
-                            <div class="card-text text-center"><span th:text="|Role - *{role}"></span></div>
+                            <div class="card-text text-center"><span th:text="|Role: *{role}|"></span></div>
                         </li>
                     </ul>
                 </a>
-                <a class="btn btn-success" th:href="@{/vacations/vacation}">Vacation</a>
+<!--                <a class="btn btn-success" th:href="@{/vacations/vacation}">Vacation</a>-->
+                <a th:href="@{/vacations/vacation(id = *{id})}" class="btn btn-success">user`s vacations </a>
                 <hr>
-                <a class="btn btn-success" th:href="@{/vacations/vacations}">All Vacations</a>
+                <a class="btn btn-success" th:href="@{/vacations/vacations}">all vacations</a>
 
             </div>
         </div>
